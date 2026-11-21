@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block contenido %}
+<div class="tarjeta">
+<strong>Consumo mensual:</strong> {{ "%.2f"|format(r.total_kwh) }} kWh<br>
+<strong>Costo estimado:</strong> $ {{ "{:,.0f}".format(r.total_costo) }}<br>
+<strong>Mayor consumidor:</strong> {{ r.mayor }}
+</div>
+<table>
+<tr><th>Equipo</th><th>kWh/mes</th><th>Costo</th><th>Participacion</th></tr>
+{% for d in r.detalle %}
+<tr>
+<td>{{ d.nombre }}</td>
+<td>{{ "%.2f"|format(d.kwh) }}</td>
+<td>$ {{ "{:,.0f}".format(d.costo) }}</td>
+<td><div class="barra" style="width:{{ d.porcentaje|round(0) }}%"></div>{{ "%.1f"|format(d.porcentaje) }}%</td>
+</tr>
+{% endfor %}
+</table>
+<div class="tarjeta">
+<strong>Escenario con {{ "%.0f"|format(r.reduccion) }}% menos de uso</strong><br>
+Consumo: {{ "%.2f"|format(r.escenario_kwh) }} kWh<br>
+Costo: $ {{ "{:,.0f}".format(r.escenario_costo) }}<br>
+Ahorro mensual: $ {{ "{:,.0f}".format(r.ahorro) }}
+</div>
+<a class="boton" href="/">Nuevo analisis</a>
+{% endblock %}

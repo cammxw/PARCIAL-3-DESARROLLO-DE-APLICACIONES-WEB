@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block contenido %}
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+<form method="post" action="/analizar">
+<div id="equipos">
+{% for i in range(3) %}
+<div class="fila">
+<input name="nombre" placeholder="Equipo" required>
+<input name="potencia" placeholder="Potencia (W)" required>
+<input name="horas" placeholder="Horas por dia" required>
+</div>
+{% endfor %}
+</div>
+<button type="button" onclick="agregar()">Agregar equipo</button>
+<p>
+<input name="tarifa" placeholder="Tarifa por kWh" required>
+<input name="reduccion" placeholder="Reduccion de uso (%)" value="0">
+</p>
+<button type="submit">Analizar consumo</button>
+</form>
+<script>
+function agregar(){
+  var f=document.querySelector(".fila").cloneNode(true);
+  f.querySelectorAll("input").forEach(function(i){i.value=""});
+  document.getElementById("equipos").appendChild(f);
+}
+</script>
+{% endblock %}
